@@ -1,7 +1,8 @@
 import logging
-import asyncio
 import random
 from aiogram import Bot, Dispatcher, executor, types
+from aiogram.dispatcher.handler import SkipHandler
+from pars_film import film_rait, film_name
 from all_film import all_film
 
 # Создание бота и вызов
@@ -19,20 +20,28 @@ async def cmd_help(message):
     Мои команды:
     /help - увидеть это сообщение со списком команд
     /start - приветствие
-    /film - выведет случайный фильм и его рейтинг
+    filmadmin - выведет случайный фильм из личного топа создателя бота
+    /filmdb - выведет случайный фильм из топ 250 рейтинга IMDb
+    /alo - alo
         '''
     )
 
 
 @dp.message_handler(commands=['start'])
 async def cmd_start(message):
-    await message.answer(f"Здарова {message.chat.first_name}, копать ты раскабанел")
+    await message.answer(f"Привет {message.chat.first_name}, а ты раскабанел")
     await cmd_help(message)
 
 
-@dp.message_handler(commands=['film'])
-async def cmd_all_film(message):
-    await message.answer(random.choice(all_film))
+@dp.message_handler(commands=['filmdb'])
+async def film_imdb(message):
+    x = random.randint(0, 249)
+    if x < 10:
+        await message.answer(text=f"{film_name[x][2:]} {film_rait[x]} IMDb")
+    elif x > 10 and x < 100:
+        await message.answer(text=f"{film_name[x][3:]} {film_rait[x]} IMDb")
+    else:
+        await message.answer(text=f"{film_name[x][4:]} {film_rait[x]} IMDb")
 
 
 @dp.message_handler(content_types=types.ContentType.TEXT)
@@ -42,7 +51,20 @@ async def send_text(message):
         await message.answer(text='Привет, создатель')
     elif message.text.lower() == 'пока':
         await message.answer(text='Прощай, создатель')
+    elif message.text.lower() == 'filmadmin':
+        await message.answer(random.choice(all_film))
 
+
+@dp.message_handler(commands=['filmadmin'])
+async def film_admin(message: types.Message):
+    await bot.send_message(random.choice(all_film))
+
+@dp.message_handler(commands=['alo'])
+async def alo(message: types.Message):
+    await bot.send_message(message.from_user.id, text='alo')
+
+    #async def echo_message(msg: types.Message):
+    #await bot.send_message(msg.from_user.id, msg.text)
 
 '''
 @dp.message_handler(commands="start")
