@@ -2,7 +2,7 @@ import logging
 import random
 from aiogram import Bot, Dispatcher, executor, types
 from pars_film import film_rait, film_name
-from all_film import all_film
+from admin_film import all_film
 from aiogram.dispatcher.filters import Text
 
 # Создание бота и вызов
