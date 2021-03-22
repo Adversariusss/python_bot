@@ -13,6 +13,7 @@ dp = Dispatcher(bot)
 logging.basicConfig(level=logging.INFO)
 
 
+# Создание команды /help
 @dp.message_handler(commands=['help'])
 async def cmd_help(message):
     await message.answer(
@@ -26,9 +27,10 @@ async def cmd_help(message):
     )
 
 
+# Создание команды /start
 @dp.message_handler(commands=['start'])
 async def cmd_start(message):
-    await message.answer(f"Привет {message.chat.first_name}, а ты раскабанел")
+    await message.answer(f"Привет {message.chat.first_name}")
     await cmd_help(message)
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
     # buttons = ["Фильм из топ 250 рейтинга IMDb", "Фильм из личного топа владельца", "Пока не нужно советовать фйильм"]
@@ -45,6 +47,7 @@ async def with_film(message: types.Message):
 """
 
 
+# Создание ответа на кнопку "Фильм из личного топа владельца"
 @dp.message_handler(Text(equals="Фильм из личного топа владельца"))
 async def with_admin(message: types.Message):
     await message.answer(random.choice(all_film))
@@ -58,6 +61,7 @@ async def not_film(message: types.Message):
 """
 
 
+# Создание команды /filmdb
 @dp.message_handler(commands=['filmdb'])
 async def film_imdb(message):
     x = random.randint(0, 249)
@@ -82,11 +86,13 @@ async def send_text(message):
 """
 
 
+# Создание команды /filmadmin
 @dp.message_handler(commands=['filmadmin'])
 async def film_admin(message: types.Message):
     await message.answer(text=random.choice(all_film))
 
 
+# Создание команды /alo - ответ: "alo"
 @dp.message_handler(commands=['alo'])
 async def alo(message: types.Message):
     await bot.send_message(message.chat.id, text='alo')
