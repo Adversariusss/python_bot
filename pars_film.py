@@ -13,7 +13,6 @@ film_name = []
 for item in als_film:
     item_text = item.get_text(strip=True)
     film_name.append(item_text)
-    # item_href = item.get("href")
 
 als_rating = soup.find_all(class_='ratingColumn imdbRating')
 film_rait = []
