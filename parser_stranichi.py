@@ -1,5 +1,3 @@
-from bs4 import BeautifulSoup
-import lxml
 import requests
 
 url = "https://www.imdb.com/chart/top/"
@@ -10,7 +8,6 @@ headers = {
 req = requests.get(url, headers=headers)
 
 src = req.text
-# print(src)
 
 with open("ind.html", "w", encoding='utf-8') as file:
     file.write(src)
