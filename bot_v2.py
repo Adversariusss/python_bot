@@ -1,12 +1,13 @@
 import logging
 import random
 from aiogram import Bot, Dispatcher, executor, types
+from aiogram.dispatcher.filters import Text
+from film_poisk import all_film_poisk, all_film_rait_poisk
 from pars_film import film_rait, film_name
 from admin_film import all_film
-from aiogram.dispatcher.filters import Text
 
 # Создание бота и вызов
-bot = Bot(token="1626448931:AAE5qbxP9aJ3w6SXfINj2Rn8NC1AaVYSaVM")
+bot = Bot(token="")
 dp = Dispatcher(bot)
 
 # Включаем логирование, чтобы не пропустить важные сообщения
@@ -22,6 +23,7 @@ async def cmd_help(message):
     /help - увидеть это сообщение со списком команд
     /start - приветствие
     /filmdb - выведет случайный фильм из топ 250 рейтинга IMDb
+    /filmpoisk - выведет случайный фильм из топ 250 рейтинга Кинопоиска
     /filmadmin - выведет случайный фильм из личного топа создателя бота
         '''
     )
@@ -39,14 +41,6 @@ async def cmd_start(message):
     await message.answer("Я могу посоветовать тебе фильм.", reply_markup=keyboard)
 
 
-"""
-@dp.message_handler(Text(equals="Фильм топ 250 рейтинга IMDb"))
-async def with_film(message: types.Message):
-    z = str(film_imdb('/filmdb'))
-    await message.answer(text=z) #film_imdb(message)
-"""
-
-
 # Создание ответа на кнопку "Фильм из личного топа владельца"
 @dp.message_handler(Text(equals="Фильм из личного топа владельца"))
 async def with_admin(message: types.Message):
@@ -54,6 +48,12 @@ async def with_admin(message: types.Message):
 
 
 """
+@dp.message_handler(Text(equals="Фильм топ 250 рейтинга IMDb"))
+async def with_film(message: types.Message):
+    z = str(film_imdb('/filmdb'))
+    await message.answer(text=z) #film_imdb(message)
+
+
 @dp.message_handler(Text(equals="Пока не нужно советовать фильм"))
 async def not_film(message: types.Message):
     if message.text == 'Пока не нужно советовать фильм':
@@ -71,6 +71,13 @@ async def film_imdb(message):
         await message.answer(text=f"{film_name[x][3:]} {film_rait[x]} IMDb")
     else:
         await message.answer(text=f"{film_name[x][4:]} {film_rait[x]} IMDb")
+
+
+# Создание команды /filmpoisk
+@dp.message_handler(commands=['filmpoisk'])
+async def film_poisk(message):
+    x = random.randint(0, 249)
+    await message.answer(text=f"{all_film_poisk[x]} {all_film_rait_poisk[x]} Кинопоиск")
 
 
 """
