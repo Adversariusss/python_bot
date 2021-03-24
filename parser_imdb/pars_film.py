@@ -27,3 +27,4 @@ elif x > 10 and x < 100:
     print(film_name[x][3:], film_rait[x] + ' IMDb')
 else:
     print(film_name[x][4:], film_rait[x] + ' IMDb')
+
