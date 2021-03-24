@@ -1,5 +1,6 @@
 import requests
 
+# По очереди парсил 5 страниц с кинопоиска
 url = "https://www.kinopoisk.ru/lists/top250/?page=5"
 headers = {
     'accept': '*/*',
@@ -12,4 +13,3 @@ print(src1)
 with open("ind5.html", "w", encoding='utf-8') as file:
     file.write(src1)
     print("end")
-
