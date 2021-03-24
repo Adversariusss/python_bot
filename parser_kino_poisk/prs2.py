@@ -21,3 +21,4 @@ film_rait_poisk2 = []
 for item in als_film_poisk2:
     item_text = item.get_text()
     film_rait_poisk2.append(item_text)
+
