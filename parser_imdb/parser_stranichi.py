@@ -11,3 +11,4 @@ src = req.text
 
 with open("ind.html", "w", encoding='utf-8') as file:
     file.write(src)
+
