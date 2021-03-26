@@ -7,4 +7,4 @@ The bot has commands:
 /filmdb - will take a random movie out of the top 250 IMDb rating;
 /filmadmin - random movie from the owner's personal rating;
 
-Бот работает только тогда, когда владелец его включает.
+Бот работает только тогда, когда я его включаю.
